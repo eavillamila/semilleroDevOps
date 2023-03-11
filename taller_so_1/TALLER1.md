@@ -7,7 +7,7 @@
 
 -------------
 A continuación, se describe el desarrollo del taller sobre manejo de archivos del módulo de Sistemas Operativos. La actividad estuvo bajo la guía y apoyo del ingeniero DevOps [**Edisson Giovanni Zuñiga**](https://giovanemere.github.io/Edisson-Giovanni-Z-Lopez/). Los scripts Shell están ubicados en la siguiente carpeta:
-**Scripts Taller 1:** [**TALLER1.md**](https://github.com/eavillamila/semilleroDevOps/tree/main/taller_so_1)
+**Scripts Taller 1:** [**taller_so_1/**](https://github.com/eavillamila/semilleroDevOps/tree/main/taller_so_1)
 
 ## *Buscar Archivos*
 Esta primera parte del taller nos pide realizar una busqueda de los archivos con extensión ".sh" dentro de la carpeta /, para luego guardar el listado en un archivo de salida y mostrar en consola su contenido. Todo esto se debe realizar en una única línea de comando. El resultado es el siguiente:

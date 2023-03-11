@@ -7,7 +7,7 @@
 
 -------------
 A continuación, se describe el desarrollo del taller sobre administración de sistemas operativos del módulo de Sistemas Operativos. La actividad estuvo bajo la guía y apoyo del ingeniero DevOps [**Edisson Giovanni Zuñiga**](https://giovanemere.github.io/Edisson-Giovanni-Z-Lopez/). Los scripts Shell están ubicados en la siguiente carpeta:
-**Script Taller 2:** [**TALLER2.md**](https://github.com/eavillamila/semilleroDevOps/tree/main/taller_so_2)
+**Script Taller 2:** [**taller_so_2/**](https://github.com/eavillamila/semilleroDevOps/tree/main/taller_so_2)
 
 ------------
 Este taller consistía en crear un menú a través de un script Shell, donde se realizan 8 diferentes acciones de administración dentro de un sistema operativo linux. Cabe aclarar que este código se desarrollo desde y para un sistema operativo **Linux Ubuntu 22.04 Server LTS**. Su uso en otro sistema operativo debe ser supervisado, y se recomienda tomarlo como base para la construcción de un menú dedicado a un nuevo sistema. Su ejecución en otro sistema puede provocar fallas sino se realizan las modificaciones necesarias.
