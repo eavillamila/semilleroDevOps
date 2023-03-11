@@ -16,8 +16,8 @@ echo -e '\n'
 echo 'Aquí puedes realizar las siguientes acciones de administración: '
 echo '1) Cambiar el nombre del servidor.'
 echo '2) Cambiar partición de discos.'
-echo '3) Cambiar IP del servidor'
-echo '4) Cambiar tabla del Host'
+echo '3) Cambiar IP del servidor.'
+echo '4) Cambiar tabla del Host.'
 echo '5) Agregar permisos de Firewall.'
 echo '6) Editar DNS Server.'
 echo '7) Configurar proxy.'
@@ -442,6 +442,8 @@ while [ $option -ne 0 ] || [ $option != '0' ]; do
             echo 'NO_PROXY="localhost, 127.0.0.1, "'
             echo '###################################################'
             echo -e '\n'
+            echo -e '\nPresiona ENTER para regresar al menú...'
+            read -p ''
             sudo nano /etc/sysconfig/proxy
             clear
             echo 'Aplicando los cambios ingresados...'
@@ -454,8 +456,8 @@ while [ $option -ne 0 ] || [ $option != '0' ]; do
             ;;
         8)
             clear
-            echo -e 'Inicia la instalacion Docker CE...\n'
-            read -p '\n¿Desea Instalar Docker (y/n)? ' answer
+            echo -e 'Inicia la instalacion Docker CE...\n\n'
+            read -p '¿Desea Instalar Docker (y/n)? ' answer
 
             if [[ $answer =~ ^[Yy]$ ]]
                 then
