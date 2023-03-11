@@ -21,6 +21,7 @@ echo '4) Cambiar tabla del Host'
 echo '5) Agregar permisos de Firewall.'
 echo '6) Editar DNS Server.'
 echo '7) Configurar proxy.'
+echo '8) Instalar Docker.'
 echo '0) Salir.'
 
 echo -e '\n'
@@ -451,6 +452,76 @@ while [ $option -ne 0 ] || [ $option != '0' ]; do
             read -p ''
             clear
             ;;
+        8)
+            clear
+            echo -e 'Inicia la instalacion Docker CE...\n'
+            read -p '\n¿Desea Instalar Docker (y/n)? ' answer
+
+            if [[ $answer =~ ^[Yy]$ ]]
+                then
+                    cd ~/
+                    echo -e '\nInstalación Prerequisitios...\n'
+                    sudo apt-get update -y
+                    sudo apt install apt-transport-https ca-certificates curl software-properties-common -y
+                    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add - -y
+                    sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable" -y
+                    sudo apt update -y
+                    apt-cache policy docker-ce -y
+                    sudo apt install docker-ce -y
+
+                    echo -e '\nVerificar Version...\n'
+                    docker --version
+
+                    echo -e '\nIniciar docker con el sistema...\n'
+                    sudo systemctl enable docker
+                    sudo systemctl start docker
+                    
+                    echo -e '\nCrear usuario de Docker...\n'
+                    sudo adduser docker
+                    
+                    echo -e '\nAgregar permisos usuario ubunutu al grupo Docker...\n'
+                    user=$(whoami)
+                    sudo usermod -G docker $user
+                    grep $user /etc/group
+
+                    echo -e '\nFolder docker...\n'
+                    folder=/Images
+                    sudo mkdir -p $folder/$user
+                    sudo mkdir -p $folder/$user/Data
+                    sudo chown -R $user:$user $folder/$user
+                    sudo chown -R $user:$user $folder/$user/Data
+                    ls -ltr $folder/
+
+                    echo -e '\nPresiona ENTER para regresar al menú...'
+                    read -p ''
+
+                    echo -e '\nInicia instalacion Docker Compose...\n'
+
+                    sudo mkdir -p /usr/local/bin
+                    sudo curl -L "https://github.com/docker/compose/releases/download/1.26.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+
+                    sudo chmod +x /usr/local/bin/docker-compose
+
+                    echo -e '\nVerificar docker-compose...\n'
+                    sudo docker-compose --version
+
+                    echo -e '\nPresiona ENTER para regresar al menú...'
+                    read -p ''
+
+                    echo -e '\nFin instalacion Docker...\n'
+
+                    echo -e '\nPresiona ENTER para regresar al menú...'
+                    read -p ''
+            fi
+
+            echo -e '\nPresiona ENTER para regresar al menú...'
+            read -p ''
+
+            unset answer
+            unset user
+            unset folder
+            clear
+            ;;
         *)
             clear
             echo -e '\e[31mLa opción que ingresaste es incorrecta.\e[m'
@@ -467,6 +538,7 @@ while [ $option -ne 0 ] || [ $option != '0' ]; do
     echo '5) Agregar permisos de Firewall.'
     echo '6) Editar DNS Server.'
     echo '7) Configurar proxy.'
+    echo '8) Instalar Docker.'
     echo '0) Salir.'
 
     echo -e '\n'
