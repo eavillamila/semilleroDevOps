@@ -12,7 +12,9 @@ echo -e '\nPresiona ENTER para continuar...'
 read -p ''
 
 clear
-echo -e 'Se realiza el commit del repositorio...\n'
+echo -e 'A continuación, se muestran las dos últimas confirmaciones (commits) del repositorio: '
+echo -e '\e[0;34m' "$(git log -2)" '\e[m'
+echo -e '\nSe realiza la confirmación (commit) del repositorio...\n'
 read -p 'Ingresa el comentario (Sugerencia - En la forma "#Comment"): ' comment
 git commit -m "$comment"
 echo -e '\nPresiona ENTER para continuar...'

@@ -22,6 +22,11 @@ if [ $option1 = y ] || [ $option1 = Y ]; then
     git config --global user.email $email
     git config --global core.autocrlf false
     clear
+
+    read -p '¿Quieres desactivar la validación de los certificados SSL? (y/n): ' option1
+    if [ $option1 = y ] || [ $option1 = Y ]; then
+        git config --global http.sslVerify false
+    fi
 fi
 
 echo 'A continuación, se muestra el estado actual del repositorio local y las ramas disponible:\n'
