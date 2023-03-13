@@ -34,7 +34,8 @@ git status
 echo -e '\nRamas disponibles:'
 git branch -r
 
-read -pe '\n¿Quieres cambiar de rama? (y/n): ' option1
+echo -e '\n'
+read -p '¿Quieres cambiar de rama? (y/n): ' option1
 if [ $option1 = y ] || [ $option1 = Y ]; then
     read -p 'Ingresa el nombre de la rama: ' rama
     git checkout $rama
