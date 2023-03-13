@@ -29,7 +29,7 @@ if [ $option1 = y ] || [ $option1 = Y ]; then
     fi
 fi
 
-echo 'A continuación, se muestra el estado actual del repositorio local y las ramas disponible:\n'
+echo -e 'A continuación, se muestra el estado actual del repositorio local y las ramas disponible:\n'
 git status
 echo -e '\nRamas disponibles:'
 git branch -r
