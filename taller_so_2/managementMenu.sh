@@ -535,7 +535,10 @@ while [ $option -ne 0 ] || [ $option != '0' ]; do
                         echo -e '\nIniciando la instalacion de Docker Compose...\n'
 
                         sudo mkdir -p /usr/local/bin
-                        sudo curl -L "https://github.com/docker/compose/releases/download/1.26.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+                        # El siguiente comando fue cambiado porque fallo para Raspberry Pi.
+                        # Se adiciona una "v" a la versión en la URL y se actualiza la versión descargada.
+                        # sudo curl -L "https://github.com/docker/compose/releases/download/1.26.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+                        sudo curl -L "https://github.com/docker/compose/releases/download/v2.16.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 
                         sudo chmod +x /usr/local/bin/docker-compose
 
