@@ -16,8 +16,8 @@ echo -e '\n'
 echo 'Aquí puedes realizar las siguientes acciones de administración: '
 echo '1) Cambiar el nombre del servidor.'
 echo '2) Cambiar partición de discos.'
-echo '3) Cambiar IP del servidor.'
-echo '4) Cambiar tabla del Host.'
+echo '3) Cambiar IP del servidor'
+echo '4) Cambiar tabla del Host'
 echo '5) Agregar permisos de Firewall.'
 echo '6) Editar DNS Server.'
 echo '7) Configurar proxy.'
@@ -442,8 +442,6 @@ while [ $option -ne 0 ] || [ $option != '0' ]; do
             echo 'NO_PROXY="localhost, 127.0.0.1, "'
             echo '###################################################'
             echo -e '\n'
-            echo -e '\nPresiona ENTER para regresar al menú...'
-            read -p ''
             sudo nano /etc/sysconfig/proxy
             clear
             echo 'Aplicando los cambios ingresados...'
@@ -456,64 +454,95 @@ while [ $option -ne 0 ] || [ $option != '0' ]; do
             ;;
         8)
             clear
-            echo -e 'Inicia la instalacion Docker CE...\n\n'
-            read -p '¿Desea Instalar Docker (y/n)? ' answer
+            echo -e 'Proceso de instalacion de Docker CE...\n'
+            read -p '\n¿Desea Instalar Docker? (y/n): ' answer
 
             if [[ $answer =~ ^[Yy]$ ]]
                 then
+                    ###############################################################
+                    ## Instalación de Docker
                     cd ~/
-                    echo -e '\nInstalación Prerequisitios...\n'
+                    echo -e '\nRealizando la instalación de los prerrequisitios y las configuraciones necesarias...\n'
                     sudo apt-get update -y
                     sudo apt install apt-transport-https ca-certificates curl software-properties-common -y
                     curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add - -y
                     sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable" -y
+                    echo -e '\nRealizando instalación de Docker...\n'
                     sudo apt update -y
                     apt-cache policy docker-ce -y
                     sudo apt install docker-ce -y
 
-                    echo -e '\nVerificar Version...\n'
-                    docker --version
+                    echo -e '\nPresiona ENTER para continuar...'
+                    read -p ''
 
-                    echo -e '\nIniciar docker con el sistema...\n'
-                    sudo systemctl enable docker
-                    sudo systemctl start docker
+                    clear
+                    echo 'Proceso de instalación completado.'
+                    echo -e '\nVerificando la versión de Docker instalada ...\n'
+                    docker --version
                     
-                    echo -e '\nCrear usuario de Docker...\n'
+                    echo -e '\nPresiona ENTER para continuar...'
+                    read -p ''
+                    
+                    clear
+                    echo -e '\nCreando y configurando el usuario Docker...\n'
+
                     sudo adduser docker
-                    
-                    echo -e '\nAgregar permisos usuario ubunutu al grupo Docker...\n'
-                    user=$(whoami)
-                    sudo usermod -G docker $user
+                    user=docker
+                    sudo usermod -a -G docker $user
                     grep $user /etc/group
 
-                    echo -e '\nFolder docker...\n'
-                    folder=/Images
+                    echo -e '\nConfigurando el usuario actual en el grupo Docker...\n'
+
+                    user=$(whoami)
+                    sudo usermod -a -G docker $user
+                    grep $user /etc/group
+
+                    echo -e '\nVerificando creación del folder docker y ortorgando permisos...\n'
+                    folder=/home/
                     sudo mkdir -p $folder/$user
                     sudo mkdir -p $folder/$user/Data
                     sudo chown -R $user:$user $folder/$user
                     sudo chown -R $user:$user $folder/$user/Data
                     ls -ltr $folder/
 
-                    echo -e '\nPresiona ENTER para regresar al menú...'
+                    echo 'Usuario Docker listo.'
+                    echo -e '\nPresiona ENTER para continuar...'
                     read -p ''
 
-                    echo -e '\nInicia instalacion Docker Compose...\n'
+                    clear
+                    echo -e 'Iniciando docker en el sistema...\n'
+                    sudo systemctl enable docker
+                    sudo systemctl start docker
 
-                    sudo mkdir -p /usr/local/bin
-                    sudo curl -L "https://github.com/docker/compose/releases/download/1.26.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-
-                    sudo chmod +x /usr/local/bin/docker-compose
-
-                    echo -e '\nVerificar docker-compose...\n'
-                    sudo docker-compose --version
-
-                    echo -e '\nPresiona ENTER para regresar al menú...'
+                    echo -e '\nServicio Docker disponible...'
+                    echo -e '\nPresiona ENTER para continuar...'
                     read -p ''
 
-                    echo -e '\nFin instalacion Docker...\n'
+                    clear
+                    echo -e 'Proceso de instalacion de Docker Compose...\n'
+                    read -p '\n¿Desea Instalar Docker Componese? (y/n): ' answer
 
-                    echo -e '\nPresiona ENTER para regresar al menú...'
-                    read -p ''
+                    if [[ $answer =~ ^[Yy]$ ]]
+                        then
+                        ###############################################################
+                        ## Instalación de Docker Compose
+
+                        echo -e '\nIniciando la instalacion de Docker Compose...\n'
+
+                        sudo mkdir -p /usr/local/bin
+                        sudo curl -L "https://github.com/docker/compose/releases/download/1.26.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+
+                        sudo chmod +x /usr/local/bin/docker-compose
+
+                        clear
+                        echo -e '\nVerificando la versión de docker-compose...\n'
+                        sudo docker-compose --version
+
+                        echo -e '\nDocker Compose está instalado.\n'
+
+                        echo -e '\nPresiona ENTER para continuar...'
+                        read -p ''
+                    fi
             fi
 
             echo -e '\nPresiona ENTER para regresar al menú...'
