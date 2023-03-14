@@ -466,6 +466,7 @@ while [ $option -ne 0 ] || [ $option != '0' ]; do
                     sudo apt-get update
                     sudo apt install apt-transport-https ca-certificates curl software-properties-common -y
                     # curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+                    # El comando anterior no funcionó en Raspberry Pi - Se encuentra la solución con los siguientes comandos:
                     curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor | sudo tee /usr/share/keyrings/docker-ce-archive-keyring.gpg > /dev/null
                     echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-ce-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker-ce.list > /dev/null
                     sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable" -y
@@ -488,8 +489,10 @@ while [ $option -ne 0 ] || [ $option != '0' ]; do
                     clear
                     echo -e '\nCreando y configurando el usuario Docker...\n'
 
-                    sudo adduser docker
                     user=docker
+                    # Si hay algún conflicto con la creación del usuario Docker, se debe editar el archivo /etc/group
+                    # borrando las líneas que contienen ese usuario o grupo.
+                    sudo adduser $user
                     sudo usermod -a -G docker $user
                     grep $user /etc/group
 
@@ -522,7 +525,7 @@ while [ $option -ne 0 ] || [ $option != '0' ]; do
 
                     clear
                     echo -e 'Proceso de instalacion de Docker Compose...\n'
-                    read -p '\n¿Desea Instalar Docker Componese? (y/n): ' answer
+                    read -p '¿Desea Instalar Docker Componese? (y/n): ' answer
 
                     if [[ $answer =~ ^[Yy]$ ]]
                         then
@@ -541,9 +544,6 @@ while [ $option -ne 0 ] || [ $option != '0' ]; do
                         sudo docker-compose --version
 
                         echo -e '\nDocker Compose está instalado.\n'
-
-                        echo -e '\nPresiona ENTER para continuar...'
-                        read -p ''
                     fi
             fi
 
