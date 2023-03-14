@@ -455,7 +455,7 @@ while [ $option -ne 0 ] || [ $option != '0' ]; do
         8)
             clear
             echo -e 'Proceso de instalacion de Docker CE...\n'
-            read -p '\n¿Desea Instalar Docker? (y/n): ' answer
+            read -p '¿Desea Instalar Docker? (y/n): ' answer
 
             if [[ $answer =~ ^[Yy]$ ]]
                 then
@@ -463,13 +463,15 @@ while [ $option -ne 0 ] || [ $option != '0' ]; do
                     ## Instalación de Docker
                     cd ~/
                     echo -e '\nRealizando la instalación de los prerrequisitios y las configuraciones necesarias...\n'
-                    sudo apt-get update -y
+                    sudo apt-get update
                     sudo apt install apt-transport-https ca-certificates curl software-properties-common -y
-                    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add - -y
+                    # curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+                    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor | sudo tee /usr/share/keyrings/docker-ce-archive-keyring.gpg > /dev/null
+                    echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-ce-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker-ce.list > /dev/null
                     sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable" -y
                     echo -e '\nRealizando instalación de Docker...\n'
-                    sudo apt update -y
-                    apt-cache policy docker-ce -y
+                    sudo apt update
+                    apt-cache policy docker-ce
                     sudo apt install docker-ce -y
 
                     echo -e '\nPresiona ENTER para continuar...'
